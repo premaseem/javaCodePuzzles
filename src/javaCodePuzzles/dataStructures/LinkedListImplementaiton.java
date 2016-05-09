@@ -10,16 +10,21 @@ public class LinkedListImplementaiton {
 
 static Map<Integer,Node> linkListMap = new HashMap<Integer, Node>();
 
+    private Node addNode(Node node){
+        LinkedListImplementaiton.linkListMap.put(linkListMap.size(),node);
+        return node;
+    }
+
     private Node populateLinkedList(){
-        Node nodeStart = new Node(1,"startNode");
+        Node nodeStart = new Node(linkListMap.size()+1,"startNode");
         Node node ;
-        LinkedListImplementaiton.linkListMap.put(1,nodeStart);
-        for (int i=1;i<10;i++) {
-             node = new Node(i+1,"value@index"+i);
-            LinkedListImplementaiton.linkListMap.put(i,node);
+        addNode(nodeStart);
+        for (int i=1;i<3;i++) {
+             node = new Node(linkListMap.size()+1,"value@index"+i);
+            addNode(node);
         }
         node =  new Node(null,"lastData");
-        LinkedListImplementaiton.linkListMap.put(linkListMap.size(),node);
+        addNode(node);
         return nodeStart;
     }
 
@@ -33,14 +38,18 @@ static Map<Integer,Node> linkListMap = new HashMap<Integer, Node>();
         Integer addressOfNextNode = head.getAddressOfNextNode();
         if ( addressOfNextNode == null) {
             Node node = new Node(null,data);
-            LinkedListImplementaiton.linkListMap.put(linkListMap.size(),node);
+            addNode(node);
             return node;
         }
         Node node = linkListMap.get(addressOfNextNode);
         insertAtTail(node, data);
         return head;
-       // head.setAddressOfNextNode(Insert(linkListMap.get(head.getAddressOfNextNode()), data));
-//        return head;
+    }
+
+    Node insertAtStart(Node head,String data) {
+        Node node = new Node(0,data);
+        addNode(node);
+        return node;
     }
 
 
@@ -61,10 +70,12 @@ static Map<Integer,Node> linkListMap = new HashMap<Integer, Node>();
         linkedList.printLinkedList(node);
 
         // removing and rejoining the linked list
-        linkedList.rejoinLinkedList(3, 7);
-        linkedList.printLinkedList(node);
+//        linkedList.rejoinLinkedList(3, 7);
+//        linkedList.printLinkedList(node);
         linkedList.insertAtTail(node, "tailValue");
         linkedList.printLinkedList(node);
+        Node headInsertedNode = linkedList.insertAtStart(node, "faceValue");
+        linkedList.printLinkedList(headInsertedNode);
     }
 
 }
