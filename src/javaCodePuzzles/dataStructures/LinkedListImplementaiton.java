@@ -18,8 +18,8 @@ static Map<Integer,Node> linkListMap = new HashMap<Integer, Node>();
              node = new Node(i+1,"value@index"+i);
             LinkedListImplementaiton.linkListMap.put(i,node);
         }
-        node =  new Node(null,null);
-        LinkedListImplementaiton.linkListMap.put(10,node);
+        node =  new Node(null,"lastData");
+        LinkedListImplementaiton.linkListMap.put(linkListMap.size(),node);
         return nodeStart;
     }
 
@@ -29,14 +29,30 @@ static Map<Integer,Node> linkListMap = new HashMap<Integer, Node>();
         sourceNode.setAddressOfNextNode(destinationAddress);
     }
 
+    Node insertAtTail(Node head,String data) {
+        Integer addressOfNextNode = head.getAddressOfNextNode();
+        if ( addressOfNextNode == null) {
+            Node node = new Node(null,data);
+            LinkedListImplementaiton.linkListMap.put(linkListMap.size(),node);
+            return node;
+        }
+        Node node = linkListMap.get(addressOfNextNode);
+        insertAtTail(node, data);
+        return head;
+       // head.setAddressOfNextNode(Insert(linkListMap.get(head.getAddressOfNextNode()), data));
+//        return head;
+    }
+
+
     // Iterative way to print linked list
     void printLinkedList(Node node){
         System.out.println(node.getData());
         if(node.getAddressOfNextNode() == null){
             return;
         }
-        Node nd1 = linkListMap.get(node.getAddressOfNextNode());
-        printLinkedList(nd1);
+        Node nextNode = linkListMap.get(node.getAddressOfNextNode());
+//        System.out.println(node.getData());
+        printLinkedList(nextNode);
     }
 
     public static void main(String[] args) {
@@ -46,6 +62,8 @@ static Map<Integer,Node> linkListMap = new HashMap<Integer, Node>();
 
         // removing and rejoining the linked list
         linkedList.rejoinLinkedList(3, 7);
+        linkedList.printLinkedList(node);
+        linkedList.insertAtTail(node, "tailValue");
         linkedList.printLinkedList(node);
     }
 
